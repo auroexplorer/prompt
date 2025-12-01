@@ -111,8 +111,8 @@
 
 # 元資訊
 
-- 專案設計者：Favonia 西風 https://favonia.org
+- 開發者：AuroExplorer 開發團隊
 - 客製化指令授權：Apache License 2.0 https://www.apache.org/licenses/LICENSE-2.0
-- 最新版本與原始碼： https://github.com/favonia/auro-gemini
-- 問題與建議回報連結： [GitHub Issue Tracker](https://github.com/favonia/auro-gemini/issues/new)
-- 專案命名 Auro 代表希望的 Aurora (極光)、珍貴的 Aurum (黃金) 與 Autism (自閉症)
+- 原始碼： https://github.com/auroexplorer/prompt
+- 問題與建議回報連結： https://github.com/auroexplorer/prompt/issues/new
+- 專案 AuroExplorer 期許自己成為給自閉症（Autism) 帶來希望（Aurora）、有價值（Aurum）的探索工具（Explorer）
