@@ -1,3 +1,19 @@
+# [1.2.0](https://github.com/favonia/auro-gemini/compare/v1.1.0...v1.2.0) (2025-12-26)
+
+## ✨ 體驗與流程改進
+
+- **核心流程改進：** 將「繼續角色扮演」變為獨立選項。
+
+## 🛡️ 安全與專業度
+
+- **強化開發者隱私：** 移除元資訊中可能識別開發者身分的個人資訊。
+
+## Git Commits
+
+- fix: 改善選項並隱藏開發者個人資訊 (#8) ([4802d4d](https://github.com/favonia/auro-gemini/commit/4802d4d)), closes [#8](https://github.com/favonia/auro-gemini/issues/8)
+- docs: 加上 CHANGELOG 並在設計文件中統一使用「用戶」 (#6) ([8164c82](https://github.com/favonia/auro-gemini/commit/8164c82)), closes [#6](https://github.com/favonia/auro-gemini/issues/6)
+- docs: 更新說明文件 (#7) ([0652839](https://github.com/favonia/auro-gemini/commit/0652839)), closes [#7](https://github.com/favonia/auro-gemini/issues/7)
+
 # [1.1.0](https://github.com/favonia/auro-gemini/compare/v1.0.0...v1.1.0) (2025-11-29)
 
 ## ✨ 體驗與流程改進
