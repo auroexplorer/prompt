@@ -1,0 +1,81 @@
+name: Lint
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  mdformat:
+    name: Markdown
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+        with:
+          egress-policy: block
+          disable-sudo-and-containers: true
+          # Include Python setup and package downloads on a cold cache.
+          allowed-endpoints: >-
+            api.github.com:443
+            files.pythonhosted.org:443
+            github.com:443
+            pypi.org:443
+            raw.githubusercontent.com:443
+            release-assets.githubusercontent.com:443
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.14"
+          cache: pip
+          cache-dependency-path: .github/workflows/mdformat-requirements.txt
+      - name: Install mdformat
+        run: python -m pip install --require-hashes --requirement .github/workflows/mdformat-requirements.txt
+      - name: Check Markdown formatting
+        run: git ls-files -z '*.md' '*.markdown' | xargs -0r python -m mdformat --check
+
+  actionlint:
+    name: GitHub Actions (actionlint)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Harden runner
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
+        with:
+          egress-policy: block
+          disable-sudo-and-containers: true
+          # Include Go setup and module downloads on a cold cache.
+          allowed-endpoints: >-
+            api.github.com:443
+            dl.google.com:443
+            github.com:443
+            go.dev:443
+            proxy.golang.org:443
+            raw.githubusercontent.com:443
+            release-assets.githubusercontent.com:443
+            storage.googleapis.com:443
+            sum.golang.org:443
+      - name: Check out the repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: "1.27.1"
+          cache: false
+      - name: Check shellcheck availability
+        run: command -v shellcheck
+      - name: Check GitHub Actions workflows
+        run: |
+          go install "github.com/rhysd/actionlint/cmd/actionlint@${ACTIONLINT_VERSION}"
+          actionlint -shellcheck shellcheck
+        env:
+          ACTIONLINT_VERSION: v1.7.12
+          GOTELEMETRY: "off"

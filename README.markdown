@@ -24,6 +24,8 @@ AuroExplorer 的設計遵循[多項嚴格的原則](./design.markdown)，以確�
    - 如果你可以使用 **Gem 管理工具**，請新增 Gem, 並將指令貼入該設定中。
    - 你也可以把指令當作與 Gemini 互動的**第一個訊息**直接貼上，以啟用 AuroExplorer。
 
+Pull request 會自動執行 Markdown 格式與 GitHub Actions workflow 檢查；工具設定與檢查指令見 [CI 設定](./.github/workflows/lint.yaml)。
+
 ## 🤝 回饋與支持
 
 Auro 是一個開源項目，歡迎任何形式的貢獻和反饋！
