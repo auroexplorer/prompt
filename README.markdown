@@ -24,6 +24,33 @@ AuroExplorer 的設計遵循[多項嚴格的原則](./design.markdown)，以確�
    - 如果你可以使用 **Gem 管理工具**，請新增 Gem, 並將指令貼入該設定中。
    - 你也可以把指令當作與 Gemini 互動的**第一個訊息**直接貼上，以啟用 AuroExplorer。
 
+### 格式與 CI 驗證
+
+每個 pull request 與推送至 `main` 的變更，都會由 CI 檢查受 Git 追蹤的 Markdown 格式，以及 GitHub Actions workflow。格式規則見 [`.mdformat.toml`](./.mdformat.toml)。
+
+本機使用 Python 3.14 建立虛擬環境，安裝與 CI 相同的套件後執行檢查：
+
+```sh
+python3.14 -m venv .venv
+. .venv/bin/activate
+python -m pip install --require-hashes --requirement .github/workflows/mdformat-requirements.txt
+git ls-files -z '*.md' '*.markdown' | xargs -0 python -m mdformat --check
+git diff --check
+```
+
+修改 workflow 時，另以 actionlint 1.7.12 執行 `actionlint -shellcheck shellcheck`；此檢查需要先安裝 ShellCheck。
+
+更新 Markdown 工具時，修改 [直接依賴清單](./.github/workflows/mdformat-requirements.in)，再用 Python 3.14 產生包含間接依賴與雜湊的鎖定檔：
+
+```sh
+python -m pip install pip-tools
+pip-compile --generate-hashes --output-file=.github/workflows/mdformat-requirements.txt --strip-extras .github/workflows/mdformat-requirements.in
+```
+
+將兩份依賴清單一起提交，並重新安裝鎖定的套件、執行上述檢查。
+
+這些自動檢查涵蓋格式與 workflow 靜態檢查。Prompt 的語意變更仍須依照[設計原則](./design.markdown)人工檢視隱私保護、重大決定提醒及高壓力安全流程；目前沒有可執行的 prompt 語意測試。
+
 ## 🤝 回饋與支持
 
 Auro 是一個開源項目，歡迎任何形式的貢獻和反饋！
